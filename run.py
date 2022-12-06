@@ -10,8 +10,10 @@
 """
 import random
 
+# Global variables
 rows = [1, 2, 3, 4, 5, 6]
 columns = ['A', 'B', 'C', 'D', 'E', 'F']
+grid = [[]]
 
 
 def accept_shot_validate():
@@ -50,11 +52,19 @@ def hit_miss():
         print(row, col)
 
 
+def create_grid():
+    """create gris and place ships on it"""
+
+
 def print_grid():
     """prints grid with symbols showing water , ships , hits and misses"""
+    debug_mode = False
     for row in range(len(rows)):
         for col in range(len(columns)):
-            print(".", end=" ")
+            if debug_mode:
+                pass
+            else:
+                print(".", end=" ")
         print("")
 
 
@@ -71,10 +81,17 @@ def validate_place_ship():
 # checks if either side has lost all their ships
 def finish_game():
     """checks if game is won or if it should continue"""
+    end_game = input("do you wish to continue Y / N")
+    end_game = end_game.upper()
+    if end_game == "N":
+        exit()
 
 
 def play_game():
+    """Runs the game using known username"""
     print_grid()
     hit_miss()
+    finish_game()
+
 
 play_game()
