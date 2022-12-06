@@ -11,7 +11,7 @@
 import random
 
 rows = [1, 2, 3, 4, 5, 6]
-colums = ['A', 'B', 'C', 'D', 'E', 'F']
+columns = ['A', 'B', 'C', 'D', 'E', 'F']
 
 
 def accept_shot_validate():
@@ -27,18 +27,35 @@ def accept_shot_validate():
             print(f"Row not valid please choose a number from {rows}")
             continue
 
-        col = input(f"Choose a colum from {colums}")
-        if col not in colums:
-            print(f"Col not valid please choose a letter from {colums}")
+        col = input(f"Choose a column from {columns}")
+        col = col.upper()
+        if col not in columns:
+            print(f"Column not valid please choose a letter from {columns}")
             continue
         print(row)
         print(col)
+        if grid[row][col] == "X" or grid[row][col] == "O":
+            break
 
         valid_shot = True
+    return row, col
+
+
+def hit_miss():
+    """checks if shot hit or miss. updates board and player"""
+    row, col = accept_shot_validate()
+    if row == 4:
+        print(row)
+    else:
+        print(row, col)
 
 
 def print_grid():
     """prints grid with symbols showing water , ships , hits and misses"""
+    for row in range(len(rows)):
+        for col in range(len(columns)):
+            print(".", end=" ")
+        print("")
 
 
 # chooses a position  to place ship
@@ -51,11 +68,13 @@ def validate_place_ship():
     """checks if ship placement is valid"""
 
 
-# checks if guess is a hit or miss to update board
-def hit_miss(row, col):
-    """checks if shot is a hit or miss"""
-
-
 # checks if either side has lost all their ships
 def finish_game():
     """checks if game is won or if it should continue"""
+
+
+def play_game():
+    print_grid()
+    hit_miss()
+
+play_game()
