@@ -11,8 +11,8 @@
 import random
 
 # Global variables
-row_num = [1, 2, 3, 4, 5, 6]
-col_letter = ['A', 'B', 'C', 'D', 'E', 'F']
+numbers = [1, 2, 3, 4, 5, 6, 7]
+letters = "ABCDEFGHIJKLMNOP"
 grid = {}
 grid_size = 6
 num_ships = 5
@@ -57,19 +57,20 @@ def hit_miss():
 def create_grid():
     """create gris and place ships on it"""
 
-    for row in range(0, 6):
-        for col in range(0, 6):
+    for row in range(0, grid_size):
+        for col in range(0, grid_size):
             x = "."
-            grid.update({f"{row_num[row]}{col_letter[col]}": x})
+            grid.update({f"{numbers[row]}{letters[col]}": x})
 
     ships_placed = 0
     rows, cols = (grid_size, grid_size)
 
     while ships_placed != num_ships:
-        random_row = random.randint(1, rows - 1)
-        random_col = random.randint(1, cols - 1)
+        random_row = random.randint(1, rows)
+        random_col = random.randint(0, cols - 1)
         print(random_row)
-        col = col_letter[random_col]
+        col = letters[random_col]
+        print(col)
         if validate_place_ship(random_row, col):
             ships_placed += 1
 
@@ -78,16 +79,16 @@ def print_grid():
     """prints grid with symbols showing water , ships , hits and misses"""
     debug_mode = True
 
-    for row in range(0, 6):
-        for col in range(0, 6):
-            x = grid[f"{row_num[row]}{col_letter[col]}"]
+    for row in range(0, grid_size):
+        for col in range(0, grid_size):
+            x = grid[f"{numbers[row]}{letters[col]}"]
             if x == "#":
                 if debug_mode:
                     print("#", end=" ")
                 else:
                     print(".", end=" ")
             else:
-                print(grid[f"{row_num[row]}{col_letter[col]}"], end=" ")
+                print(grid[f"{numbers[row]}{letters[col]}"], end=" ")
         print("")
 
 
@@ -97,7 +98,7 @@ def testing():
     for row in range(0, 6):
         for col in range(0, 6):
             x = "x"
-            grid.update({f"{row_num[row]}{col_letter[col]}": x})
+            grid.update({f"{numbers[row]}{letters[col]}": x})
 
 
 # chooses a position  to place ship
