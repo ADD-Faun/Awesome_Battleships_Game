@@ -11,9 +11,11 @@
 import random
 
 # Global variables
-rows = [1, 2, 3, 4, 5, 6]
-columns = ['A', 'B', 'C', 'D', 'E', 'F']
-grid = [[]]
+row_num = [1, 2, 3, 4, 5, 6]
+col_letter = ['A', 'B', 'C', 'D', 'E', 'F']
+grid = {}
+grid_size = 6
+num_ships = 5
 
 
 def accept_shot_validate():
@@ -24,15 +26,15 @@ def accept_shot_validate():
 
     while not valid_shot:
 
-        row = int(input(f"Choose a row from {rows}"))
-        if row not in rows:
-            print(f"Row not valid please choose a number from {rows}")
+        row = int(input(f"Choose a row from {row_num}"))
+        if row not in row_num:
+            print(f"Row not valid please choose a number from {row_num}")
             continue
 
-        col = input(f"Choose a column from {columns}")
+        col = input(f"Choose a column from {col_letter}")
         col = col.upper()
-        if col not in columns:
-            print(f"Column not valid please choose a letter from {columns}")
+        if col not in col_letter:
+            print(f"Column not valid please choose a letter from {col_letter}")
             continue
         print(row)
         print(col)
@@ -55,17 +57,47 @@ def hit_miss():
 def create_grid():
     """create gris and place ships on it"""
 
+    for row in range(0, 6):
+        for col in range(0, 6):
+            x = "."
+            grid.update({f"{row_num[row]}{col_letter[col]}": x})
+
+    ships_placed = 0
+    rows, cols = (grid_size, grid_size)
+
+    while ships_placed != num_ships:
+        random_row = random.randint(1, rows - 1)
+        random_col = random.randint(1, cols - 1)
+        print(random_row)
+        col = col_letter[random_col]
+        if validate_place_ship(random_row, col):
+            ships_placed += 1
+
 
 def print_grid():
     """prints grid with symbols showing water , ships , hits and misses"""
-    debug_mode = False
-    for row in range(len(rows)):
-        for col in range(len(columns)):
-            if debug_mode:
-                pass
+    debug_mode = True
+
+    for row in range(0, 6):
+        for col in range(0, 6):
+            x = grid[f"{row_num[row]}{col_letter[col]}"]
+            if x == "#":
+                if debug_mode:
+                    print("#", end=" ")
+                else:
+                    print(".", end=" ")
             else:
-                print(".", end=" ")
+                print(grid[f"{row_num[row]}{col_letter[col]}"], end=" ")
         print("")
+
+
+def testing():
+    """testing code"""
+
+    for row in range(0, 6):
+        for col in range(0, 6):
+            x = "x"
+            grid.update({f"{row_num[row]}{col_letter[col]}": x})
 
 
 # chooses a position  to place ship
@@ -74,8 +106,15 @@ def place_ship():
 
 
 # checks ship placement is avalible
-def validate_place_ship():
+def validate_place_ship(row, col):
     """checks if ship placement is valid"""
+    valid = True
+    if grid[f"{row}{col}"] != ".":
+        valid = False
+    elif grid[f"{row}{col}"] == ".":
+        grid.update({f"{row}{col}": "#"})
+
+    return valid
 
 
 # checks if either side has lost all their ships
@@ -94,4 +133,6 @@ def play_game():
     finish_game()
 
 
-play_game()
+create_grid()
+print(grid)
+print_grid()
