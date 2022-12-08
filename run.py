@@ -16,6 +16,9 @@ LET = "ABCDEFGHIJKLMNOP"
 grid = {}
 grid_size = 6
 num_ships = 5
+game_over = False
+ships_sunk = 0
+player_name = ""
 
 
 def accept_shot_validate():
@@ -52,11 +55,16 @@ def grid_dict(row, col):
 
 def hit_miss():
     """checks if shot hit or miss. updates board and player"""
+    global ships_sunk
+
     row, col = accept_shot_validate()
     if grid_dict(row, col) == "#":
         print("hit")
+        grid.update({f"{num[row]}{LET[col]}": "X"})
+        ships_sunk += 1
     else:
         print("miss")
+        grid.update({f"{num[row]}{LET[col]}": "O"})
 
 
 def create_grid():
@@ -132,18 +140,32 @@ def validate_place_ship(row, col):
 # checks if either side has lost all their ships
 def finish_game():
     """checks if game is won or if it should continue"""
-    end_game = input("do you wish to continue Y / N")
-    end_game = end_game.upper()
-    if end_game == "N":
-        exit()
+    global game_over
+    game_over = False
+
+    if ships_sunk == num_ships:
+        game_over = True
+
+    else:
+        end_game = input("do you wish to continue Y / N")
+        end_game = end_game.upper()
+        if end_game == "N":
+            game_over = True
 
 
 def play_game():
     """Runs the game using known username"""
     create_grid()
-    print_grid()
-    hit_miss()
-    finish_game()
+    while not game_over:
+        print_grid()
+        hit_miss()
+        finish_game()
+    again = input("play again Y/N")
+    again = again.upper()
+    if again == "N":
+        print("bye")
+    else:
+        play_game()
 
 
 def print_col_letters():
@@ -154,4 +176,5 @@ def print_col_letters():
     print("")
 
 
+player_name = input("what is your name?")
 play_game()
