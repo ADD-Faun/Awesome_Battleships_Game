@@ -56,6 +56,14 @@ def grid_dict(row, col):
     return grid[f"{num[row]}{LET[col]}"]
 
 
+def print_col_letters():
+    """prints out the column letters at top and bottom of grid to read easy"""
+    print(" ", end=" ")
+    for row in range(0, grid_size):
+        print(LET[row], end=" ")
+    print("")
+
+
 def hit_miss():
     """checks if shot hit or miss. updates board and player"""
     global ships_sunk
@@ -192,14 +200,6 @@ def set_board():
     misses = 0
     global game_over
     game_over = False
-
-
-def print_col_letters():
-    """prints out the column letters at top and bottom of grid to read easy"""
-    print(" ", end=" ")
-    for row in range(0, grid_size):
-        print(LET[row], end=" ")
-    print("")
 
 
 player_name = input("what is your name?\n")
