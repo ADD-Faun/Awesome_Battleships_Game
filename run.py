@@ -26,15 +26,15 @@ def accept_shot_validate():
 
     while not valid_shot:
 
-        row = int(input(f"Choose a row from {row_num}"))
-        if row not in row_num:
-            print(f"Row not valid please choose a number from {row_num}")
+        row = input(f"Choose a row from {numbers[0]}-{numbers[grid_size]}")
+        if row not in numbers:
+            print(f"invalid choose a from {numbers[0]}-{numbers[grid_size]}")
             continue
 
-        col = input(f"Choose a column from {col_letter}")
+        col = input(f"Choose a column from {letters[0]}-{letters[grid_size]}")
         col = col.upper()
-        if col not in col_letter:
-            print(f"Column not valid please choose a letter from {col_letter}")
+        if col not in letters:
+            print(f"invalid choose a from {letters[0]}-{letters[grid_size]}")
             continue
         print(row)
         print(col)
@@ -79,7 +79,10 @@ def print_grid():
     """prints grid with symbols showing water , ships , hits and misses"""
     debug_mode = True
 
+    print_col_letters()
+
     for row in range(0, grid_size):
+        print(f"{numbers[row]}", end=" ")
         for col in range(0, grid_size):
             x = grid[f"{numbers[row]}{letters[col]}"]
             if x == "#":
@@ -89,7 +92,10 @@ def print_grid():
                     print(".", end=" ")
             else:
                 print(grid[f"{numbers[row]}{letters[col]}"], end=" ")
-        print("")
+        print(f"{numbers[row]}", end=" ")
+        print(" ")
+
+    print_col_letters()
 
 
 def testing():
@@ -132,6 +138,14 @@ def play_game():
     print_grid()
     hit_miss()
     finish_game()
+
+
+def print_col_letters():
+    """prints out the column letters at top and bottom of grid to read easy"""
+    print(" ", end=" ")
+    for row in range(0, grid_size):
+        print(letters[row], end=" ")
+    print("")
 
 
 create_grid()
