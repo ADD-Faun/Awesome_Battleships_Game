@@ -127,7 +127,7 @@ def create_grid(user):
 
 def print_grid(user):
     """prints grid with symbols showing water , ships , hits and misses"""
-    debug_mode = True
+    debug_mode = False
 
     print_col_letters()
 
@@ -136,7 +136,7 @@ def print_grid(user):
         for col in range(0, grid_size):
             x = grid_dict(row, col, user)
             if x == "#":
-                if debug_mode:
+                if debug_mode or not user:
                     print("#", end=" ")
                 else:
                     print(".", end=" ")
@@ -207,6 +207,8 @@ def play_game():
 
     while not game_over:
         print_grid(True)
+        print("^^Enemy Grid^^")
+        print("Your Grid below")
         print_grid(False)
         hit_miss(True)
         hit_miss(False)
