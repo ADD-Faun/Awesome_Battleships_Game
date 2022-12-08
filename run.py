@@ -11,8 +11,8 @@
 import random
 
 # Global variables
-numbers = [1, 2, 3, 4, 5, 6, 7]
-letters = "ABCDEFGHIJKLMNOP"
+num = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+LET = "ABCDEFGHIJKLMNOP"
 grid = {}
 grid_size = 6
 num_ships = 5
@@ -21,37 +21,42 @@ num_ships = 5
 def accept_shot_validate():
     """Take user input and check if valid"""
     valid_shot = False
-    row = -1
-    col = -1
 
     while not valid_shot:
 
-        row = input(f"Choose a row from {numbers[0]}-{numbers[grid_size]}")
-        if row not in numbers:
-            print(f"invalid choose a from {numbers[0]}-{numbers[grid_size]}")
+        row = int(input(f"Choose a row from {num[0]}-{num[grid_size]}"))
+        if row not in num:
+            print(f"invalid choose a from {num[0]}-{num[grid_size]}")
             continue
 
-        col = input(f"Choose a column from {letters[0]}-{letters[grid_size]}")
+        col = input(f"Choose a column from {LET[0]}-{LET[grid_size]}")
         col = col.upper()
-        if col not in letters:
-            print(f"invalid choose a from {letters[0]}-{letters[grid_size]}")
+        if col not in LET:
+            print(f"invalid choose a from {LET[0]}-{LET[grid_size]}")
             continue
-        print(row)
-        print(col)
-        if grid[row][col] == "X" or grid[row][col] == "O":
-            break
+
+        row = row - 1
+        col = ord(col) - 65
+        if grid_dict(row, col) == "X" or grid_dict(row, col) == "O":
+            print(f"You have already shot {row + 1}{LET[col]}")
+            continue
 
         valid_shot = True
     return row, col
 
 
+def grid_dict(row, col):
+    """grid referencing """
+    return grid[f"{num[row]}{LET[col]}"]
+
+
 def hit_miss():
     """checks if shot hit or miss. updates board and player"""
     row, col = accept_shot_validate()
-    if row == 4:
-        print(row)
+    if grid_dict(row, col) == "#":
+        print("hit")
     else:
-        print(row, col)
+        print("miss")
 
 
 def create_grid():
@@ -60,7 +65,7 @@ def create_grid():
     for row in range(0, grid_size):
         for col in range(0, grid_size):
             x = "."
-            grid.update({f"{numbers[row]}{letters[col]}": x})
+            grid.update({f"{num[row]}{LET[col]}": x})
 
     ships_placed = 0
     rows, cols = (grid_size, grid_size)
@@ -69,7 +74,7 @@ def create_grid():
         random_row = random.randint(1, rows)
         random_col = random.randint(0, cols - 1)
         print(random_row)
-        col = letters[random_col]
+        col = LET[random_col]
         print(col)
         if validate_place_ship(random_row, col):
             ships_placed += 1
@@ -82,17 +87,17 @@ def print_grid():
     print_col_letters()
 
     for row in range(0, grid_size):
-        print(f"{numbers[row]}", end=" ")
+        print(f"{num[row]}", end=" ")
         for col in range(0, grid_size):
-            x = grid[f"{numbers[row]}{letters[col]}"]
+            x = grid_dict(row, col)
             if x == "#":
                 if debug_mode:
                     print("#", end=" ")
                 else:
                     print(".", end=" ")
             else:
-                print(grid[f"{numbers[row]}{letters[col]}"], end=" ")
-        print(f"{numbers[row]}", end=" ")
+                print(grid[f"{num[row]}{LET[col]}"], end=" ")
+        print(f"{num[row]}", end=" ")
         print(" ")
 
     print_col_letters()
@@ -104,7 +109,7 @@ def testing():
     for row in range(0, 6):
         for col in range(0, 6):
             x = "x"
-            grid.update({f"{numbers[row]}{letters[col]}": x})
+            grid.update({f"{num[row]}{LET[col]}": x})
 
 
 # chooses a position  to place ship
@@ -135,6 +140,7 @@ def finish_game():
 
 def play_game():
     """Runs the game using known username"""
+    create_grid()
     print_grid()
     hit_miss()
     finish_game()
@@ -144,10 +150,8 @@ def print_col_letters():
     """prints out the column letters at top and bottom of grid to read easy"""
     print(" ", end=" ")
     for row in range(0, grid_size):
-        print(letters[row], end=" ")
+        print(LET[row], end=" ")
     print("")
 
 
-create_grid()
-print(grid)
-print_grid()
+play_game()
