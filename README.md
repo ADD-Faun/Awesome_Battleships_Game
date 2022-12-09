@@ -14,9 +14,11 @@ and can see where they have shot on the computers grid.
 
 - __Grid generation__
 
-  - A 5 by 5 grid is generated for each side to be displayed during the game
+  - A square grid is generated for each side to be displayed during the game
   - ships are randomly placed on each grid 
   - users can not see the computers ships 
+  - Grid has letters and numbers along sides to help choose square
+  - Grid locations are stored in a dictionary.
 
 ![Nav Bar](assets/images/Navigation-mock-up.png)
 
@@ -37,38 +39,29 @@ and can see where they have shot on the computers grid.
 
 ![What We Do](assets/images/what-we-do-readme.png)
 
-- __The Footer__ 
+- __Grid size and ship number__ 
 
-  - The footer section includes links to the relevant social media sites for Widnes Climbers. The links will open to a new tab to allow easy navigation for the user. 
-  - The footer is valuable to the user as it encourages them to keep connected via social media
-  - The footer was made to always be at the bottom of the page so larger screen sizes don't have blank at the bottom when there is not enough content.
+  - Allows player to choose number of ships between 1 and 1 less then filling the grid.
+  - Grid size choice is limited to 4 - 7 due to using letters for columns and more than 
+    7 being too big to see both.
+  - 
 
 ![Footer](assets/images/footer-readme.png)
 
-- __Where We Go page__
+- __Score__
 
-  - The Where We Go page will provide the visitor with supporting images to see what the indoor facilities are like. 
-  - The Where We Go page will provide the visitor with supporting images to see what the outdoor locations are like.
-  - This section is useful for the visitor to imagine what it would be like to join the group.
-  - Reviews the places the group goes
-
-![Where We Go](assets/images/where-we-go-readme.png)
-
-- __Join Us Page__
-
-  - This page will allow the visitor to signed up for Widnes Climbers to receive a welcome letter and information on which part they are interested in. The user will be able specify if they are interested in bouldering , rope climbing or outdoor climbing. 
-  - The visitor may select one , two or three types of climbing but must select one.
-  - The visitor will be asked to submit their full name and email address. 
-
-![Join Us](assets/images/join-us-readme.png)
+  - How many shots there have been and how many ships they hit is told to the user at
+    the end of every turn.
+  - Users are told how many ships they have left and how many they have left to sink.
+  - Users are told if they hit or missed every turn.
 
 ### Features Left to Implement
 
-- Allow player to choose grid size without it being too big for the screen
 - Allow players to place there own ships 
 - Ships of different sizes 
 - Having the computer make better quesses when ships are bigger than one square
 
+------
 ## Testing 
 
 __How testing was done__
@@ -79,39 +72,28 @@ __How testing was done__
     - letters where numbers are expected and the reverse
     - no data entered
     - Blank spaces and random symbols like ! {} []
+- Set a debug_mode in the print_grid function to show computer ships when
+  Debug_mode is True. Allowing to test hit, miss and win messages and 
+  test score tracking.
 
 __Bugs fixed__
 
 - Enteries such as symbols ] , } and empty space caused crashs when code tryed to use it.
   I fixed this by adding list of unexcepted characters.
-- Crashed when trying to change non number into int. Fixed by confirming data is number
+- Crashed when trying to change non number into int. Fixed by confirming user input is number
   before changing to int.
+- Grid size can't be bigger than 26 as it runs out of letters. fixed by limiting grid size.
+- Grid size can't be bigger that 9 as it miss aligns the row with the column. fixed by limiting
+  choice of grid size.
+- Input request was to long inside while and if statements, so set to a variable.
+- Using user input of letters made for too long code or crashes. fixed by changing letter input
+  recieved into a number using ord(x) - 65 .
 
+__Remaining Bugs__
 
-
-
+- Grid size can't be bigger that 9 as it miss aligns columns and rows
 
 ------
-In this section, you need to convince the assessor that you have conducted enough testing to legitimately believe that the site works well. Essentially, in this part you will want to go over all of your project’s features and ensure that they all work as intended, with the project providing an easy and straightforward way for the users to achieve their goals.
-
-In addition, you should mention in this section how your project looks and works on different browsers and screen sizes.
-
-You should also mention in this section any interesting bugs or problems you discovered during your testing, even if you haven't addressed them yet.
-
-If this section grows too long, you may want to split it off into a separate file and link to it from here.
-
-
-### Validator Testing 
-
-- HTML
-  - Section without heading, heading not needed, changed to div.
-   No errors were returned when passing through the official [W3C validator](https://validator.w3.org/nu/?doc=https%3A%2F%2Fadd-faun.github.io%2FClimbers%2F)
-- CSS
-  - No errors were found when passing through the official [(Jigsaw) validator](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fadd-faun.github.io%2FClimbers&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
-
-### Unfixed Bugs
-
-Join us page image quality is low. Different file sizes and larger quality uploads did not work.
 
 ## Deployment
 
@@ -129,33 +111,3 @@ The live link can be found here - https://add-faun.github.io/Climbers/index.html
 ## Credits 
 
 Lots of inspiration was taken from the love running website project taught by Code institute 
-
-### Code & Styling
-
-- Footer code to keep it at the bottom of the page and not have it overlap other content was taken from https://developer.mozilla.org/en-US/docs/Web/CSS/Layout_cookbook/Sticky_footers . This code was free use.
-- Background pattern done using css is from free to use code from https://github.com/Yuvrajchandra/CSS-Background-Patterns
-- The style of the form and join us page was taken from the Love running project 
-
-### Content 
-
-- The style of the form and join us page was taken from the Love running project (provide more links)
-- The icons in the footer were taken from [Font Awesome](https://fontawesome.com/)
-
-### Media
-##### General
-
-- Cover/hero image used on home page taken from free open source site pexel.com (pexels-m-venter-1659437)
-- Join us page background image taken from free open source site pexel.com (pavel-danilyuk-7591309)
-##### Where we go
-
-- Where we go 1st image, matchworks climbing center, used to review and advertise the location we visit. Taken from their facebook https://www.facebook.com/TCHLiverpool/photos/5308587909198965/  & website https://www.theclimbinghangar.com/media/3103/hangar_swansea_l-lonsdale__0508-2-edit-x2.jpg?center=0.483091787439614
-- Where we go 2nd image, boardroom climbing center, used to review and advertise the location we visit. Taken from their website https://www.theboardroomclimbing.com/
-- Where we go 3rd image showing outdoor bouldering taken from subscription image site dreamstime.com https://www.dreamstime.com/stock-photo-couple-bouldering-happy-boulders-women-climbing-men-spotting-image55085115
-- Where we go 4th image showing man climbing a mountain from image site getty.com
-- Where we go 5th image showing people at a pub taken from free open source site pexel.com
-##### What we do 
-
-- What we do 1st image showing indoor bouldering, used for education, taken from xxxx
-- What we do 2nd image showing two types of rope climbing taken from https://www.vdiffclimbing.com/basic-top-rope/
-- What we do 3rd image showing two women bouldering outdoors taken from climbinghouse.com
-- What we do 4th image showing man climbing a mountain from image site getty.com
