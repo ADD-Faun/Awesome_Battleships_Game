@@ -12,7 +12,7 @@ import random
 
 # Global variables
 
-num = [x for x in range(1, 27)]
+NUM = [x for x in range(1, 27)]
 LET = [chr(x) for x in range(65, 91)]
 grid = {}
 grid_c = {}
@@ -30,15 +30,15 @@ LINE = "--------------------------------"
 def accept_shot_validate(use):
     """Take user input and check if valid"""
     valid_shot = False
-    row_choices = f"Choose a row between {num[0]}-{num[grid_size - 1]}\n"
+    row_choices = f"Choose a row between {NUM[0]}-{NUM[grid_size - 1]}\n"
     col_choices = f"Choose a column between {LET[0]}-{LET[grid_size - 1]}\n"
     bad = ("", " ", "[", "]", ",")
 
     while not valid_shot:
         row = "-1"
-        while row in bad or row not in str(num[0:grid_size - 1]):
+        while row in bad or row not in str(NUM[0:grid_size]):
             row = input(row_choices)
-            if row in bad or row not in str(num[0:grid_size - 1]):
+            if row in bad or row not in str(NUM[0:grid_size]):
                 print(f"{row} is invalid")
 
         col = "-1"
@@ -62,17 +62,17 @@ def accept_shot_validate(use):
 def grid_dict(row, col, user):
     """grid referencing either computer or player based on input"""
     if user:
-        return grid[f"{num[row]}{LET[col]}"]
+        return grid[f"{NUM[row]}{LET[col]}"]
     else:
-        return grid_c[f"{num[row]}{LET[col]}"]
+        return grid_c[f"{NUM[row]}{LET[col]}"]
 
 
 def grid_update(row, col, user):
     "update computers grid or players grid based on input"
     if user:
-        grid.update({f"{num[row]}{LET[col]}": "X"})
+        grid.update({f"{NUM[row]}{LET[col]}": "X"})
     else:
-        grid_c.update({f"{num[row]}{LET[col]}": "X"})
+        grid_c.update({f"{NUM[row]}{LET[col]}": "X"})
 
 
 def print_col_letters():
@@ -94,22 +94,22 @@ def hit_miss(user):
     else:
         row, col = accept_shot_validate(user)
 
-    target = f"{num[row]}{LET[col]}"
+    target = f"{NUM[row]}{LET[col]}"
 
     if grid_dict(row, col, user) == "#":
         if not user:
-            grid_c.update({f"{num[row]}{LET[col]}": "X"})
+            grid_c.update({f"{NUM[row]}{LET[col]}": "X"})
             user_ships -= 1
         else:
-            grid.update({f"{num[row]}{LET[col]}": "X"})
+            grid.update({f"{NUM[row]}{LET[col]}": "X"})
             comp_ships -= 1
             score(1, 1, target)
 
     else:
         if not user:
-            grid_c.update({f"{num[row]}{LET[col]}": "O"})
+            grid_c.update({f"{NUM[row]}{LET[col]}": "O"})
         else:
-            grid.update({f"{num[row]}{LET[col]}": "O"})
+            grid.update({f"{NUM[row]}{LET[col]}": "O"})
             score(1, 0, target)
 
 
@@ -119,9 +119,9 @@ def create_grid(user):
     for row in range(0, grid_size):
         for col in range(0, grid_size):
             if not user:
-                grid_c.update({f"{num[row]}{LET[col]}": "."})
+                grid_c.update({f"{NUM[row]}{LET[col]}": "."})
             else:
-                grid.update({f"{num[row]}{LET[col]}": "."})
+                grid.update({f"{NUM[row]}{LET[col]}": "."})
 
     ships_placed = 0
 
@@ -139,7 +139,7 @@ def print_grid(user):
     print_col_letters()
 
     for row in range(0, grid_size):
-        print(f"{num[row]}", end=" ")
+        print(f"{NUM[row]}", end=" ")
         for col in range(0, grid_size):
             position = grid_dict(row, col, user)
             if position == "#":
@@ -149,14 +149,10 @@ def print_grid(user):
                     print(".", end=" ")
             else:
                 print(grid_dict(row, col, user), end=" ")
-        print(f"{num[row]}", end=" ")
+        print(f"{NUM[row]}", end=" ")
         print(" ")
 
     print_col_letters()
-
-
-def testing():
-    """testing code"""
 
 
 # chooses a position  to place ship
@@ -188,7 +184,7 @@ def validate_place_ship(row, col, user):
     if grid_dict(row, col, user) != ".":
         valid = False
     elif grid_dict(row, col, user) == ".":
-        row = num[row]
+        row = NUM[row]
         col = LET[col]
         if not user:
             grid_c.update({f"{row}{col}": "#"})
@@ -229,6 +225,7 @@ def finish_game():
 
 def play_game():
     """Runs the game using known username"""
+    set_board()
     create_grid(True)
     create_grid(False)
     print(f"Welcome {player_name}")
@@ -246,7 +243,6 @@ def play_game():
     if again == "N":
         print("Goodbye it was fun playing")
     else:
-        set_board()
         play_game()
 
 
@@ -282,5 +278,4 @@ def change_grid_size():
 
 
 player_name = input("what is your name?\n")
-print(num)
 play_game()
