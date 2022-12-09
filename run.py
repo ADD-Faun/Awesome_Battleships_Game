@@ -25,6 +25,7 @@ shots = 0
 hits = 0
 player_name = ""
 LINE = "--------------------------------"
+BAD = ("", " ", "[", "]", ",")
 
 
 def accept_shot_validate(use):
@@ -32,27 +33,26 @@ def accept_shot_validate(use):
     valid_shot = False
     row_choices = f"Choose a row between {NUM[0]}-{NUM[grid_size - 1]}\n"
     col_choices = f"Choose a column between {LET[0]}-{LET[grid_size - 1]}\n"
-    bad = ("", " ", "[", "]", ",")
 
     while not valid_shot:
         row = "-1"
-        while row in bad or row not in str(NUM[0:grid_size]):
+        while row in BAD or row not in str(NUM[0:grid_size]):
             row = input(row_choices)
-            if row in bad or row not in str(NUM[0:grid_size]):
-                print(f"{row} is invalid")
+            if row in BAD or row not in str(NUM[0:grid_size]):
+                print(f"'{row}' is invalid")
 
         col = "-1"
         while col not in LET:
             col = input(f"{col_choices}")
             col = col.upper()
             if col not in LET:
-                print(f"{col} is invalid")
+                print(f"'{col}'is invalid")
 
         row = int(row) - 1
         col = ord(col) - 65
 
         if grid_dict(row, col, use) == "X" or grid_dict(row, col, use) == "O":
-            print(f"You have already shot {row + 1}{LET[col]}")
+            print(f"You have already shot '{row + 1}{LET[col]}'")
             continue
 
         valid_shot = True
@@ -134,7 +134,7 @@ def create_grid(user):
 
 def print_grid(user):
     """prints grid with symbols showing water , ships , hits and misses"""
-    debug_mode = False
+    debug_mode = True
 
     print_col_letters()
 
@@ -226,6 +226,7 @@ def finish_game():
 def play_game():
     """Runs the game using known username"""
     set_board()
+    change_grid_size()
     create_grid(True)
     create_grid(False)
     print(f"Welcome {player_name}")
@@ -241,7 +242,7 @@ def play_game():
     again = input("Press anykey to play again or N to end\n")
     again = again.upper()
     if again == "N":
-        print("Goodbye it was fun playing")
+        print(f"Goodbye {player_name} it was fun playing")
     else:
         play_game()
 
@@ -266,15 +267,25 @@ def set_board():
 
 def change_grid_size():
     """lets the player change the grid size"""
-# currently unused as players could make the grid too big for screen
     global grid_size
     global num_ships
-    size = input("choose a size between 4-26 for the square grids")
-    while not size > 4 and not size < 27:
-        size = input("Grid size must be between 4-26")
-    grid_size = size
-    ships = input(f"choose number of ships between 1-{grid_size**-1}")
-    num_ships = ships
+    global comp_ships
+    global user_ships
+# currently unused as players could make the grid too big for screen
+#    size = input("choose a size between 4-26 for the square grids\n")
+#    while size in BAD or size not in str(NUM[3:26]):
+#        size = input("choose a size between 4-26\n")
+#        if size in BAD or size not in str(NUM[3:26]):
+#            print(f"'{size}' is invalid")
+#    grid_size = int(size)
+    num_ships = [(range(1, grid_size**2 - 1))]
+    ships = input(f"choose number of ships between 1-{grid_size**2 - 1}\n")
+    while ships in BAD or ships not in str(num_ships):
+        ships = input(f"choose number of ships between 1-{grid_size**2 - 1}\n")
+        continue
+    num_ships = int(ships)
+    comp_ships = num_ships
+    user_ships = num_ships
 
 
 player_name = input("what is your name?\n")
