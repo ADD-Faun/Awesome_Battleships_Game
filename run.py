@@ -11,8 +11,9 @@
 import random
 
 # Global variables
-num = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-LET = "ABCDEFGHIJKLMNOP"
+
+num = [x for x in range(1, 27)]
+LET = [chr(x) for x in range(65, 91)]
 grid = {}
 grid_c = {}
 grid_size = 5
@@ -23,29 +24,33 @@ user_ships = num_ships
 shots = 0
 hits = 0
 player_name = ""
-LINE = "-----------------------------"
+LINE = "--------------------------------"
 
 
-def accept_shot_validate():
+def accept_shot_validate(use):
     """Take user input and check if valid"""
     valid_shot = False
-    use = True
+    row_choices = f"Choose a row between {num[0]}-{num[grid_size - 1]}\n"
+    col_choices = f"Choose a column between {LET[0]}-{LET[grid_size - 1]}\n"
 
     while not valid_shot:
+        row = "-1"
+        while row not in str(num[0:grid_size - 1]):
+            row = input(row_choices)
+            if row not in str(num[0:grid_size - 1]):
+                print(f"{row} is invalid")
+        row = int(row)
 
-        row = int(input(f"Choose a row {num[0]}-{num[grid_size - 1]}\n"))
-        if row not in num:
-            print(f"Invalid choose a row {num[0]}-{num[grid_size - 1]}\n")
-            continue
-
-        col = input(f"Choose a column {LET[0]}-{LET[grid_size - 1]}\n")
-        col = col.upper()
-        if col not in LET:
-            print(f"Invalid choose a column {LET[0]}-{LET[grid_size - 1]}\n")
-            continue
+        col = "-1"
+        while col not in LET:
+            col = input(f"{col_choices}")
+            col = col.upper()
+            if col not in LET:
+                print(f"{col} is invalid")
 
         row = row - 1
         col = ord(col) - 65
+
         if grid_dict(row, col, use) == "X" or grid_dict(row, col, use) == "O":
             print(f"You have already shot {row + 1}{LET[col]}")
             continue
@@ -87,7 +92,7 @@ def hit_miss(user):
         row = random.randint(0, grid_size - 1)
         col = random.randint(0, grid_size - 1)
     else:
-        row, col = accept_shot_validate()
+        row, col = accept_shot_validate(user)
 
     target = f"{num[row]}{LET[col]}"
 
@@ -136,8 +141,8 @@ def print_grid(user):
     for row in range(0, grid_size):
         print(f"{num[row]}", end=" ")
         for col in range(0, grid_size):
-            x = grid_dict(row, col, user)
-            if x == "#":
+            position = grid_dict(row, col, user)
+            if position == "#":
                 if debug_mode or not user:
                     print("#", end=" ")
                 else:
@@ -170,7 +175,7 @@ def score(shot, hit, target):
     if hit:
         print(f"Weldone you've hit an ememy ship on {target}")
     else:
-        print(f"Too bad no ememy ship on {target}")
+        print(f"Too bad no enemy ship on {target}")
     print(f"After {shots} {word} you have {user_ships} left floating")
     print(f"Your enemy has {comp_ships} left for you to sink.")
     print(LINE)
@@ -178,7 +183,7 @@ def score(shot, hit, target):
 
 # checks ship placement is avalible
 def validate_place_ship(row, col, user):
-    """checks if ship placement is valid"""
+    """checks if ship placement is valid for user or comp"""
     valid = True
     if grid_dict(row, col, user) != ".":
         valid = False
@@ -194,6 +199,7 @@ def validate_place_ship(row, col, user):
 
 
 # checks if either side has lost all their ships
+# or asks if user wants to continue
 def finish_game():
     """checks if game is won or if it should continue"""
     global game_over
@@ -246,8 +252,6 @@ def play_game():
 
 def set_board():
     """puts score and ships used back to 0"""
-    global ships_sunk
-    ships_sunk = 0
     global shots
     shots = 0
     global hits
@@ -264,5 +268,19 @@ def set_board():
     game_over = False
 
 
+def change_grid_size():
+    """lets the player change the grid size"""
+# currently unused as players could make the grid too big for screen
+    global grid_size
+    global num_ships
+    size = input("choose a size between 4-26 for the square grids")
+    while not size > 4 and not size < 27:
+        size = input("Grid size must be between 4-26")
+    grid_size = size
+    ships = input(f"choose number of ships between 1-{grid_size**-1}")
+    num_ships = ships
+
+
 player_name = input("what is your name?\n")
+print(num)
 play_game()
