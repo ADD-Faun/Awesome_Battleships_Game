@@ -32,14 +32,14 @@ def accept_shot_validate(use):
     valid_shot = False
     row_choices = f"Choose a row between {num[0]}-{num[grid_size - 1]}\n"
     col_choices = f"Choose a column between {LET[0]}-{LET[grid_size - 1]}\n"
+    bad = ("", " ", "[", "]", ",")
 
     while not valid_shot:
         row = "-1"
-        while row not in str(num[0:grid_size - 1]):
+        while row in bad or row not in str(num[0:grid_size - 1]):
             row = input(row_choices)
-            if row not in str(num[0:grid_size - 1]):
+            if row in bad or row not in str(num[0:grid_size - 1]):
                 print(f"{row} is invalid")
-        row = int(row)
 
         col = "-1"
         while col not in LET:
@@ -48,7 +48,7 @@ def accept_shot_validate(use):
             if col not in LET:
                 print(f"{col} is invalid")
 
-        row = row - 1
+        row = int(row) - 1
         col = ord(col) - 65
 
         if grid_dict(row, col, use) == "X" or grid_dict(row, col, use) == "O":
