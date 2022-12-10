@@ -1,6 +1,3 @@
-# Your code goes here.
-# You can delete these comments, but do not change the name of this file
-# Write your code to expect a terminal of 80 characters wide and 24 rows high
 """
     Legend:
     1. "." = water or empty space
@@ -8,6 +5,7 @@
     3. "X" = part of ship that was hit with bullet
     4. "O" = water that was shot with bullet, a miss because it hit no ship
 """
+
 import random
 
 # Constants
@@ -15,10 +13,58 @@ NUM = [x for x in range(1, 27)]
 LET = [chr(x) for x in range(65, 91)]
 LINE = "--------------------------------"
 BAD = ("", " ", "[", "]", ",")
+board = {"ships": 5, "shots": 0, "hits": 0, "size": 0}
 
 # Global variables
 game_over = False
-board = {"ships": 5, "shots": 0, "hits": 0, "size": 0}
+
+
+def target(row, col):
+    """takes row and column and returns dictionary key. makes
+    future code smaller"""
+    return f"{NUM[row]}{LET[col]}"
+
+
+def random_tar():
+    """Selects target for ship placement or comp shot"""
+    row = random.randint(0, board.grid - 1)
+    col = random.randint(0, board.grid - 1)
+    tar = target(row, col)
+    return tar
+
+
+def print_col_letters():
+    """prints out the column letters at top and bottom of grid to read easy"""
+    print(" ", end=" ")
+    for row in range(0, board.grid):
+        print(LET[row], end=" ")
+    print("")
+
+
+def print_row_numbers(row):
+    """prints out row numbers for the side of the grid"""
+    print(f"{NUM[row]}", end=" ")
+
+
+#####
+def change_grid_size():
+    """lets the player change the grid size and choose number of ships"""
+
+    size = input("Choose a Grid size from 4-7\n")
+    while size in BAD or size not in str(NUM[3:8]):
+        print(f"'{size}' is invalid")
+        size = input("choose a Grid size from 4-7\n")
+
+    board.grid = int(size)
+
+    ships = input(f"choose number of ships from 1-{board.grid**2 - 1}\n")
+    while ships in BAD or ships not in str(NUM[0: board.grid**2 - 1]):
+        print(f"'{ships}' is invalid")
+        ships = input(f"choose number of ships from 1-{board.grid**2 - 1}\n")
+
+    board.ships = int(ships)
+    comp.ships = int(ships)
+    player.ships = int(ships)
 
 
 class User:
@@ -75,7 +121,7 @@ class User:
             print_row_numbers(row)
             print(" ")
 
-        print_col_letters(grid_size)
+        print_col_letters()
 
     def hit_miss(self):
         """checks if shot hit or miss. updates board and player"""
@@ -102,67 +148,13 @@ class User:
                 score(1, 0, tar)
 
 
-def set_board():
-    """Sets global varibles needed for game to 0"""
-    # Set shots and hits to zero for new game score
-    board["shots"] = 0
-    board["hits"] = 0
-    # Game_over must be set to False for game to run
-    global game_over
-    game_over = False
-
-    # Clear both grids so never any issues of size
-    player.board.clear()
-    comp.board.clear()
-
-
-def change_grid_size():
-    """lets the player change the grid size and choose number of ships"""
-
-    size = input("Choose a Grid size between 4-7\n")
-    while size in BAD or size not in str(NUM[3:8]):
-        print(f"'{size}' is invalid")
-        size = input("choose a Grid size between 4-7\n")
-
-    board["size"] = int(size)
-    grid_size = board["size"]
-
-    ships = input(f"choose number of ships between 1-{grid_size**2 - 1}\n")
-    while ships in BAD or ships not in str(NUM[0: grid_size**2 - 1]):
-        print(f"'{ships}' is invalid")
-        ships = input(f"choose number of ships between 1-{grid_size**2 - 1}\n")
-
-    board["ships"] = int(ships)
-    comp.ships = int(ships)
-    player.ships = int(ships)
-
-
-def print_col_letters(grid_size):
-    """prints out the column letters at top and bottom of grid to read easy"""
-    print(" ", end=" ")
-    for row in range(0, grid_size):
-        print(LET[row], end=" ")
-    print("")
-
-
-def print_row_numbers(row):
-    """prints out row numbers for the side of the grid"""
-    print(f"{NUM[row]}", end=" ")
-
-
-def target(row, col):
-    """takes row and column and returns dictionary key. makes
-    future code smaller"""
-    return f"{NUM[row]}{LET[col]}"
-
-
-def random_tar():
-    """Selects target for ship placement or comp shot"""
-    grid_size = board["size"]
-    row = random.randint(0, grid_size - 1)
-    col = random.randint(0, grid_size - 1)
-    tar = target(row, col)
-    return tar
+class Board:
+    """"the board"""
+    def __init__(self, ships, shots, hits, grid):
+        self.ships = 0
+        self.shots = 0
+        self.hits = 0
+        self.grid = 0
 
 
 def accept_shot_validate(defender):
@@ -199,14 +191,21 @@ def accept_shot_validate(defender):
     return tar
 
 
+def display():
+    """prints both grids with labels"""
+    comp.print_grid()
+    print("^^Enemy Grid^^")
+    print("Your Grid below")
+    player.print_grid()
+
+
 def score(shot, hit, tar):
     """updates and prints score"""
-    board["shots"] += shot
-    board["hits"] += hit
-    shots = board["shots"]
+    board.shots += shot
+    board.hits += hit
 
     word = "shot"
-    if board["shots"] > 1:
+    if board.shots > 1:
         word = "shots"
 
     print(LINE)
@@ -214,7 +213,7 @@ def score(shot, hit, tar):
         print(f"Weldone you've hit an enemy ship on {tar}")
     else:
         print(f"Too bad no enemy ship on {tar}")
-    print(f"After {shots} {word} you have {player.ships} left floating")
+    print(f"After {board.shots} {word} you have {player.ships} left floating")
     print(f"Your enemy has {comp.ships} left for you to sink.")
     print(LINE)
 
@@ -223,7 +222,6 @@ def finish_game():
     """Checks if game is over and if user wants to continue"""
     global game_over
     game_over = False
-    ships = board["ships"]
     # Checks if either side has lost all their ships
     if comp.ships == 0 or player.ships == 0:
         game_over = True
@@ -232,8 +230,8 @@ def finish_game():
             print(f"Weldone {player_name} you sunk all the enemy ships")
         else:
             print(f"Too bad {player_name} they sunk all your ships")
-        print(f"you had {player.ships} ships left floating of {ships}")
-        print(f"Your enemy had {comp.ships} left floating of {ships}")
+        print(f"you had {player.ships} ships left floating of {board.ships}")
+        print(f"Your enemy had {comp.ships} left floating of {board.ships}")
         print(LINE)
     # Asks if player wants to continue. if not continue prints ship numbers
     else:
@@ -242,8 +240,8 @@ def finish_game():
         if end_game == "N":
             game_over = True
             print(LINE)
-            print(f"you had {player.ships} ships left floating of {ships}")
-            print(f"Your enemy had {comp.ships} left floating of {ships}")
+            print(f"{player.ships} ships left floating of {board.ships}")
+            print(f"{comp.ships} left to sink of {board.ships}")
             print(LINE)
 
 
@@ -253,32 +251,21 @@ def new_game():
     set_board()
     player.create_grid()
     comp.create_grid()
-    how_to_play()
     print(f"Ok {player_name} let's play")
 
 
-def display():
-    """prints both grids with labels"""
-    comp.print_grid()
-    print("^^Enemy Grid^^")
-    print("Your Grid below")
-    player.print_grid()
+def set_board():
+    """Sets global varibles needed for game to 0"""
+    # Set shots and hits to zero for new game score
+    board.shots = 0
+    board.hits = 0
+    # Game_over must be set to False for game to run
+    global game_over
+    game_over = False
 
-
-def how_to_play():
-    """Tells player how to play, what symbols mean, what they'll be asked
-    and asks if they are ready"""
-    text = "how to play"
-    print(text)
-    keep_going = input("Press anykey to continue")
-    symbols = "symbols meaning"
-    print(symbols)
-    keep_going = input("Press anykey to continue")
-    ready = f"Are you ready to play {player_name}"
-    print(ready)
-    keep_going = input("Press anykey to continue")
-    if keep_going:
-        pass
+    # Clear both grids so never any issues of size
+    player.board.clear()
+    comp.board.clear()
 
 
 def play_game():
@@ -300,8 +287,9 @@ def play_game():
         play_game()
 
 
+player_name = input("what is your name?\n")
 comp = User("grid_c", 5)
 player = User("grid_u", 5)
+board = Board(0, 0, 0, 0)
 
-player_name = input("what is your name?\n")
 play_game()
