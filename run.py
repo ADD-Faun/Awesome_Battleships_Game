@@ -112,8 +112,7 @@ def change_grid_size():
 
     board["size"] = int(size)
     max_ships = int(size)**2 - 1
-    if max_ships > 25:
-        max_ships = 25
+    max_ships = min(max_ships, 25)
 
     ships = input(f"choose number of ships between 1-{max_ships}\n")
     while ships in BAD or ships not in str(NUM[0: max_ships]):
