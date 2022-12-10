@@ -275,9 +275,9 @@ def how_to_play():
     print(text, text2, text3, text4)
     symbols = "    Legend\n"
     water = "1. '.' = water or empty space\n"
-    ship_part = "2. '#' = part of ship\n"
-    hit_ship = "3. 'X' = part of ship that was hit with bullet\n"
-    missed = "4. 'O' = water that was shot with bullet, a miss because it hit no ship\n"
+    ship_part = "2. '#' = A ship\n"
+    hit_ship = "3. 'X' = A ship that was hit with bullet\n"
+    missed = "4. 'O' = water you have already shot at\n"
     print(symbols, water, ship_part, hit_ship, missed)
     print(f"Are you ready to play {player_name}")
     keep_going = input("Press anykey to continue")
