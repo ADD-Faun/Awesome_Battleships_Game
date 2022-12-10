@@ -102,20 +102,6 @@ class User:
                 score(1, 0, tar)
 
 
-def set_board():
-    """Sets global varibles needed for game to 0"""
-    # Set shots and hits to zero for new game score
-    board["shots"] = 0
-    board["hits"] = 0
-    # Game_over must be set to False for game to run
-    global game_over
-    game_over = False
-
-    # Clear both grids so never any issues of size
-    player.board.clear()
-    comp.board.clear()
-
-
 def change_grid_size():
     """lets the player change the grid size and choose number of ships"""
 
@@ -253,8 +239,21 @@ def new_game():
     set_board()
     player.create_grid()
     comp.create_grid()
-    how_to_play()
     print(f"Ok {player_name} let's play")
+
+
+def set_board():
+    """Sets global varibles needed for game to 0"""
+    # Set shots and hits to zero for new game score
+    board["shots"] = 0
+    board["hits"] = 0
+    # Game_over must be set to False for game to run
+    global game_over
+    game_over = False
+
+    # Clear both grids so never any issues of size
+    player.board.clear()
+    comp.board.clear()
 
 
 def display():
@@ -270,12 +269,9 @@ def how_to_play():
     and asks if they are ready"""
     text = "how to play"
     print(text)
-    keep_going = input("Press anykey to continue")
     symbols = "symbols meaning"
     print(symbols)
-    keep_going = input("Press anykey to continue")
-    ready = f"Are you ready to play {player_name}"
-    print(ready)
+    print(f"Are you ready to play {player_name}")
     keep_going = input("Press anykey to continue")
     if keep_going:
         pass
@@ -283,8 +279,6 @@ def how_to_play():
 
 def play_game():
     """Runs the game using known username"""
-    global game_over
-    game_over = False
     new_game()
 
     while not game_over:
@@ -304,4 +298,5 @@ comp = User("grid_c", 5)
 player = User("grid_u", 5)
 
 player_name = input("what is your name?\n")
+how_to_play()
 play_game()
