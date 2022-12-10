@@ -13,12 +13,12 @@ import random
 # Constants
 NUM = [x for x in range(1, 27)]
 LET = [chr(x) for x in range(65, 91)]
+board = {"ships": 5, "shots": 0, "hits": 0, "size": 0}
 LINE = "--------------------------------"
 BAD = ("", " ", "[", "]", ",")
 
 # Global variables
 game_over = False
-board = {"ships": 5, "shots": 0, "hits": 0, "size": 0}
 
 
 class User:
@@ -271,13 +271,14 @@ def how_to_play():
     text = "You and you opponent each have ships on a square grid\n"
     text2 = "Select a square where you think a ship is on the enemy grid\n"
     text3 = "Enter the row number then column letter to fire\n"
-    text4 = "First to sink all the opponents ships wins\n"
+    text4 = F"First to sink all the opponents ships wins\n{LINE}"
+    print(LINE)
     print(text, text2, text3, text4)
     symbols = "    Legend\n"
     water = "1. '.' = water or empty space\n"
     ship_part = "2. '#' = A ship\n"
     hit_ship = "3. 'X' = A ship that was hit with bullet\n"
-    missed = "4. 'O' = water you have already shot at\n"
+    missed = F"4. 'O' = water you have already shot at\n{LINE}"
     print(symbols, water, ship_part, hit_ship, missed)
     print(f"Are you ready to play {player_name}")
     keep_going = input("Press anykey to continue")
