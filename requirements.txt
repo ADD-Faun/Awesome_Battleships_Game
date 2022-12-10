@@ -1,1 +1,12 @@
 # Your requirements go here
+global shots
+shots = 0
+global hits
+    its = 0
+    global grid
+    grid = {}
+    global grid_c
+    grid_c = {}
+
+global game_over
+game_over = False

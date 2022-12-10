@@ -14,23 +14,36 @@ import random
 
 NUM = [x for x in range(1, 81)]
 LET = [chr(x) for x in range(65, 91)]
-player_name = ""
 LINE = "--------------------------------"
 BAD = ("", " ", "[", "]", ",")
+
+grid = {}
+grid_c = {}
+
+game_over = False
+shots = 0
+hits = 0
+
+grid_size = 5
+num_ships = 5
+comp_ships = num_ships
+player_ships = num_ships
 
 
 def set_board():
     """Sets global varibles needed for game to 0"""
+    # Set shots and hits to zero for new game score
     global shots
     shots = 0
     global hits
     hits = 0
-    global grid
-    grid = {}
-    global grid_c
-    grid_c = {}
+    # Game_over must be set to False for game to run
     global game_over
     game_over = False
+
+    # Clear both grids so never any issues of size
+    grid.clear()
+    grid_c.clear()
 
 
 def change_grid_size():
@@ -38,7 +51,7 @@ def change_grid_size():
     global grid_size
     global num_ships
     global comp_ships
-    global user_ships
+    global player_ships
 
     size = input("Choose a Grid size between 4-7\n")
     while size in BAD or size not in str(NUM[3:8]):
@@ -54,39 +67,58 @@ def change_grid_size():
 
     num_ships = int(ships)
     comp_ships = num_ships
-    user_ships = num_ships
+    player_ships = num_ships
 
 
-def accept_shot_validate(user):
-    """Take user input and check if valid"""
-    valid_shot = False
-    row_choices = f"Choose a row between {NUM[0]}-{NUM[grid_size - 1]}\n"
-    col_choices = f"Choose a column between {LET[0]}-{LET[grid_size - 1]}\n"
-    row_range = str(NUM[0:grid_size])
+def create_grid(user):
+    """Creates grid and places ships on it"""
 
-    while not valid_shot:
-        row = input(row_choices)
-        while row in BAD or row not in row_range:
-            print(f"'{row}' is invalid")
-            row = input(row_choices)
+    for row in range(0, grid_size):
+        for col in range(0, grid_size):
+            tar = target(row, col)
+            user.update({tar: "."})
 
-        col = input(f"{col_choices}")
-        col = col.upper()
-        while col not in LET:
-            print(f"'{col}'is invalid")
-            col = input(f"{col_choices}")
-            col = col.upper()
+    ships_placed = 0
 
-        row = int(row) - 1
-        col = ord(col) - 65
-        tar = target(row, col)
+    while ships_placed != num_ships:
+        tar = random_tar()
+        if validate_place_ship(tar, user):
+            ships_placed += 1
 
-        if user[tar] == "X" or user[tar] == "O":
-            print(f"You have already shot '{tar}'")
-            continue
 
-        valid_shot = True
-    return tar
+# checks ship placement is avalible
+def validate_place_ship(tar, user):
+    """Checks if ship can be placed at location"""
+    valid = True
+    if user[tar] != ".":
+        valid = False
+    else:
+        user.update({tar: "#"})
+    return valid
+
+
+def print_grid(user):
+    """prints grid with symbols showing water, ships, hits and misses
+    does not show enemy ships unless debug mode is True"""
+    debug_mode = False
+
+    print_col_letters()
+
+    for row in range(0, grid_size):
+        print_row_numbers(row)
+        for col in range(0, grid_size):
+            tar = target(row, col)
+            if user[tar] == "#":
+                if debug_mode or user == grid:
+                    print("#", end=" ")
+                else:
+                    print(".", end=" ")
+            else:
+                print(user[tar], end=" ")
+        print_row_numbers(row)
+        print(" ")
+
+    print_col_letters()
 
 
 def print_col_letters():
@@ -119,69 +151,62 @@ def random_tar():
 def hit_miss(user):
     """checks if shot hit or miss. updates board and player"""
     global comp_ships
-    global user_ships
+    global player_ships
 
     if user == grid_c:
+        defender = grid
         tar = random_tar()
     else:
-        tar = accept_shot_validate(user)
+        defender = grid_c
+        tar = accept_shot_validate(defender)
 
-    if user[tar] == "#":
+    if defender[tar] == "#":
         info = "X"
-        user.update({tar: info})
-        if user == grid:
+        defender.update({tar: info})
+        if defender == grid_c:
             comp_ships -= 1
             score(1, 1, tar)
         else:
-            user_ships -= 1
+            player_ships -= 1
     else:
         info = "O"
-        user.update({tar: info})
-        if user == grid:
+        defender.update({tar: info})
+        if defender == grid_c:
             score(1, 0, tar)
 
 
-def create_grid(user):
-    """Creates grid and places ships on it"""
+def accept_shot_validate(defender):
+    """Take user input and check if valid"""
+    valid_shot = False
+    row_choices = f"Choose a row between {NUM[0]}-{NUM[grid_size - 1]}\n"
+    col_choices = f"Choose a column between {LET[0]}-{LET[grid_size - 1]}\n"
+    row_range = str(NUM[0:grid_size])
 
-    for row in range(0, grid_size):
-        for col in range(0, grid_size):
-            tar = target(row, col)
-            user.update({tar: "."})
+    while not valid_shot:
+        row = input(row_choices)
+        while row in BAD or row not in row_range:
+            print(f"'{row}' is invalid")
+            row = input(row_choices)
 
-    ships_placed = 0
+        col = input(f"{col_choices}")
+        col = col.upper()
+        while col not in LET:
+            print(f"'{col}'is invalid")
+            col = input(f"{col_choices}")
+            col = col.upper()
 
-    while ships_placed != num_ships:
-        tar = random_tar()
-        if validate_place_ship(tar, user):
-            ships_placed += 1
+        row = int(row) - 1
+        col = ord(col) - 65
+        tar = target(row, col)
 
+        if defender[tar] == "X" or defender[tar] == "O":
+            print(f"You have already shot '{tar}'")
+            continue
 
-def print_grid(user):
-    """prints grid with symbols showing water, ships, hits and misses
-    does not show enemy ships unless debug mode is True"""
-    debug_mode = True
-
-    print_col_letters()
-
-    for row in range(0, grid_size):
-        print_row_numbers(row)
-        for col in range(0, grid_size):
-            tar = target(row, col)
-            if user[tar] == "#":
-                if debug_mode or user == grid:
-                    print("#", end=" ")
-                else:
-                    print(".", end=" ")
-            else:
-                print(user[tar], end=" ")
-        print_row_numbers(row)
-        print(" ")
-
-    print_col_letters()
+        valid_shot = True
+    return tar
 
 
-# chooses a position  to place ship
 def score(shot, hit, tar):
     """updates and prints score"""
     global shots
@@ -195,23 +220,12 @@ def score(shot, hit, tar):
 
     print(LINE)
     if hit:
-        print(f"Weldone you've hit an ememy ship on {tar}")
+        print(f"Weldone you've hit an enemy ship on {tar}")
     else:
         print(f"Too bad no enemy ship on {tar}")
-    print(f"After {shots} {word} you have {user_ships} left floating")
+    print(f"After {shots} {word} you have {player_ships} left floating")
     print(f"Your enemy has {comp_ships} left for you to sink.")
     print(LINE)
-
-
-# checks ship placement is avalible
-def validate_place_ship(tar, user):
-    """Checks if ship can be placed at location"""
-    valid = True
-    if user[tar] != ".":
-        valid = False
-    else:
-        user.update({tar: "#"})
-    return valid
 
 
 # checks if either side has lost all their ships
@@ -221,14 +235,14 @@ def finish_game():
     global game_over
     game_over = False
 
-    if comp_ships == 0 or user_ships == 0:
+    if comp_ships == 0 or player_ships == 0:
         game_over = True
         print(LINE)
         if comp_ships == 0:
             print(f"Weldone {player_name} you sunk all the enemy ships")
         else:
             print(f"Too bad {player_name} they sunk all your ships")
-        print(f"you had {user_ships} ships left floating of {num_ships}")
+        print(f"you had {player_ships} ships left floating of {num_ships}")
         print(f"Your enemy had {comp_ships} left floating of {num_ships}")
         print(LINE)
 
@@ -238,7 +252,7 @@ def finish_game():
         if end_game == "N":
             game_over = True
             print(LINE)
-            print(f"you had {user_ships} ships left floating of {num_ships}")
+            print(f"you had {player_ships} ships left floating of {num_ships}")
             print(f"Your enemy had {comp_ships} left floating of {num_ships}")
             print(LINE)
 
@@ -254,14 +268,16 @@ def new_game():
 
 def display():
     """prints both grids with labels"""
-    print_grid(grid)
+    print_grid(grid_c)
     print("^^Enemy Grid^^")
     print("Your Grid below")
-    print_grid(grid_c)
+    print_grid(grid)
 
 
 def play_game():
     """Runs the game using known username"""
+    global game_over
+    game_over = False
     new_game()
 
     while not game_over:
