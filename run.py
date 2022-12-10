@@ -11,7 +11,7 @@
 import random
 
 # Constants
-NUM = [range(1, 27)]
+NUM = [x for x in range(1, 27)]
 LET = [chr(x) for x in range(65, 91)]
 board = {"ships": 5, "shots": 0, "hits": 0, "size": 0}
 LINE = "--------------------------------"
