@@ -10,24 +10,25 @@
 """
 import random
 
-# Global variables
-
-NUM = [x for x in range(1, 81)]
+# Constants
+NUM = [x for x in range(1, 27)]
 LET = [chr(x) for x in range(65, 91)]
 LINE = "--------------------------------"
 BAD = ("", " ", "[", "]", ",")
 
+# Players grid & user name for functions
 grid = {}
+# Computers grid & user name for functions
 grid_c = {}
 
+# Global variables
 game_over = False
-shots = 0
-hits = 0
-
 grid_size = 5
 num_ships = 5
 comp_ships = num_ships
 player_ships = num_ships
+shots = 0
+hits = 0
 
 
 def set_board():
@@ -152,7 +153,7 @@ def hit_miss(user):
     """checks if shot hit or miss. updates board and player"""
     global comp_ships
     global player_ships
-
+    # User shoots, defender variable used to update data
     if user == grid_c:
         defender = grid
         tar = random_tar()
@@ -178,6 +179,7 @@ def hit_miss(user):
 def accept_shot_validate(defender):
     """Take user input and check if valid"""
     valid_shot = False
+    # Choices and range to keep code short & readable
     row_choices = f"Choose a row between {NUM[0]}-{NUM[grid_size - 1]}\n"
     col_choices = f"Choose a column between {LET[0]}-{LET[grid_size - 1]}\n"
     row_range = str(NUM[0:grid_size])
@@ -228,13 +230,11 @@ def score(shot, hit, tar):
     print(LINE)
 
 
-# checks if either side has lost all their ships
-# or asks if user wants to continue
 def finish_game():
     """Checks if game is over and if user wants to continue"""
     global game_over
     game_over = False
-
+    # Checks if either side has lost all their ships
     if comp_ships == 0 or player_ships == 0:
         game_over = True
         print(LINE)
@@ -245,7 +245,7 @@ def finish_game():
         print(f"you had {player_ships} ships left floating of {num_ships}")
         print(f"Your enemy had {comp_ships} left floating of {num_ships}")
         print(LINE)
-
+    # Asks if player wants to continue. if not continue prints ship numbers
     else:
         end_game = input("Press anykey to continue or N to quit game\n")
         end_game = end_game.upper()
@@ -263,6 +263,7 @@ def new_game():
     set_board()
     create_grid(grid)
     create_grid(grid_c)
+    how_to_play()
     print(f"Ok {player_name} let's play")
 
 
@@ -272,6 +273,21 @@ def display():
     print("^^Enemy Grid^^")
     print("Your Grid below")
     print_grid(grid)
+
+
+def how_to_play():
+    """Tells player how to play, what symbols mean, what they'll be asked
+    and asks if they are ready"""
+    text = "how to play"
+    print(text)
+    keep_going = input("Press anykey to continue")
+    symbols = "symbols meaning"
+    print(symbols)
+    keep_going = input("Press anykey to continue")
+    ready = f"Are you ready to play {player_name}"
+    print(ready)
+    keep_going = input("Press anykey to continue")
+    print(keep_going)
 
 
 def play_game():
@@ -294,4 +310,4 @@ def play_game():
 
 
 player_name = input("what is your name?\n")
-play_game()
+how_to_play()

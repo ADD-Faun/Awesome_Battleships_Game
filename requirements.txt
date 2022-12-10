@@ -10,3 +10,5 @@ global hits
 
 global game_over
 game_over = False
+
+grid_maker = {(target(row, col)): "." for col in range(0, grid_size) for row in range(0, grid_size)}
