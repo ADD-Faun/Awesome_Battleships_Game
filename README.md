@@ -14,36 +14,37 @@ and can see where they have shot on the computers grid.
 
 - __Grid generation__
 
-  - A square grid is generated for each side to be displayed during the game
-  - ships are randomly placed on each grid 
-  - users can not see the computers ships 
-  - Grid has letters and numbers along sides to help choose square
+  - A square grid is generated for each side to be displayed during the game.
+  - ships are randomly placed on each grid. 
+  - users can not see the computers ships.
+  - Grid has letters and numbers along sides to help choose square.
   - Grid locations are stored in a dictionary.
 
 ![Nav Bar](assets/images/Navigation-mock-up.png)
 
 - __User input and validation__
 
-  - Users are asked for a grid square by row and column with prompts of possible choices 
-  - If selected row or column is not on the grid they are asked to resubmit that data
-  - If user selects a square they have already guessed they are askked to resubmit data
+  - Users are asked for a grid square by row and column with prompts of possible choices. 
+  - If selected row or column is not on the grid they are asked to resubmit that data.
+  - If user selects a square they have already guessed they are asked to resubmit data.
+  - Incorrect inputs return "' ' is invalid" and asks them to resubmit.
   
 
 ![Landing Page](https://github.com/lucyrush/readme-template/blob/master/media/love_running_landing.png)
 
 - __Data control__
 
-  - Data for each grid maintained in a dictionary 
-  - Most data is only active during game time 
-  - there are some permanent variables 
+  - Data for each sides board and ships is contained in a class.
+  - The scores, grid size and number of ships stored in a dictionary. 
+  - there are some permanent variables. 
 
 ![What We Do](assets/images/what-we-do-readme.png)
 
 - __Grid size and ship number__ 
 
-  - Allows player to choose number of ships between 1 and 1 less then filling the grid.
-  - Grid size choice is limited to 4 - 7 due to using letters for columns and more than 
-    7 being too big to see both.
+  - Allows player to choose number of ships between 1 and 26 as long as it doesn't fill
+    the board.
+  - Allows player to choose grid size between 2 and 7.
   - 
 
 ![Footer](assets/images/footer-readme.png)
@@ -78,10 +79,9 @@ __How testing was done__
 
 __Bugs fixed__
 
-- Enteries such as symbols ] , } and empty space caused crashs when code tryed to use it.
-  I fixed this by adding list of unexcepted characters.
-- Crashed when trying to change non number into int. Fixed by confirming user input is number
-  before changing to int.
+- Enteries such as symbols ] , } and empty space were being accepted when not in the accepted 
+  range and caused crashes when trying to change to an interger. I fixed this by adding a list 
+  of unexcepted characters.
 - Grid size can't be bigger than 26 as it runs out of letters. fixed by limiting grid size.
 - Grid size can't be bigger that 9 as it miss aligns the row with the column. fixed by limiting
   choice of grid size.
@@ -91,7 +91,7 @@ __Bugs fixed__
 
 __Remaining Bugs__
 
-- Grid size can't be bigger that 9 as it miss aligns columns and rows
+- No bugs remaining
 
 ------
 

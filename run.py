@@ -90,7 +90,7 @@ class User:
         if defender[tar] == "#":
             info = "X"
             defender.update({tar: info})
-            if defender == comp.board:
+            if self == player:
                 comp.ships -= 1
                 score(1, 1, tar)
             else:
@@ -98,7 +98,7 @@ class User:
         else:
             info = "O"
             defender.update({tar: info})
-            if defender == comp.board:
+            if self == player:
                 score(1, 0, tar)
 
 
@@ -111,21 +111,19 @@ def change_grid_size():
         size = input("choose a Grid size between 2-7\n")
 
     board["size"] = int(size)
-    max_ships = int(size)**2 - 1
-    max_ships = min(max_ships, 25)
+    max_ships = min(int(size)**2 - 1, 26)
 
     ships = input(f"choose number of ships between 1-{max_ships}\n")
     while ships in BAD or ships not in str(NUM[0: max_ships]):
         print(f"'{ships}' is invalid")
         ships = input(f"choose number of ships between 1-{max_ships}\n")
 
-    board["ships"] = int(ships)
-    comp.ships = int(ships)
-    player.ships = int(ships)
+    ships = int(ships)
+    board["ships"], comp.ships, player.ships = ships, ships, ships
 
 
 def print_col_letters(grid_size):
-    """prints out the column letters at top and bottom of grid to read easy"""
+    """prints out the column letters. Used at top & bottom of grid"""
     print(" ", end=" ")
     for row in range(0, grid_size):
         print(LET[row], end=" ")
@@ -167,11 +165,11 @@ def accept_shot_validate(defender):
             print(f"'{row}' is invalid")
             row = input(row_choices)
 
-        col = input(f"{col_choices}")
+        col = input(col_choices)
         col = col.upper()
-        while col not in LET:
+        while col not in LET[0:grid_size]:
             print(f"'{col}'is invalid")
-            col = input(f"{col_choices}")
+            col = input(col_choices)
             col = col.upper()
 
         row = int(row) - 1
