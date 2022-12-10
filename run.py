@@ -105,18 +105,20 @@ class User:
 def change_grid_size():
     """lets the player change the grid size and choose number of ships"""
 
-    size = input("Choose a Grid size between 4-7\n")
-    while size in BAD or size not in str(NUM[3:8]):
+    size = input("Choose a Grid size between 2-7\n")
+    while size in BAD or size not in str(NUM[1:7]):
         print(f"'{size}' is invalid")
-        size = input("choose a Grid size between 4-7\n")
+        size = input("choose a Grid size between 2-7\n")
 
     board["size"] = int(size)
-    grid_size = board["size"]
+    max_ships = int(size)**2 - 1
+    if max_ships > 25:
+        max_ships = 25
 
-    ships = input(f"choose number of ships between 1-{grid_size**2 - 1}\n")
-    while ships in BAD or ships not in str(NUM[0: grid_size**2 - 1]):
+    ships = input(f"choose number of ships between 1-{max_ships}\n")
+    while ships in BAD or ships not in str(NUM[0: max_ships]):
         print(f"'{ships}' is invalid")
-        ships = input(f"choose number of ships between 1-{grid_size**2 - 1}\n")
+        ships = input(f"choose number of ships between 1-{max_ships}\n")
 
     board["ships"] = int(ships)
     comp.ships = int(ships)
@@ -267,10 +269,17 @@ def display():
 def how_to_play():
     """Tells player how to play, what symbols mean, what they'll be asked
     and asks if they are ready"""
-    text = "how to play"
-    print(text)
-    symbols = "symbols meaning"
-    print(symbols)
+    text = "You and you opponent each have ships on a square grid\n"
+    text2 = "Select a square where you think a ship is on the enemy grid\n"
+    text3 = "Enter the row number then column letter to fire\n"
+    text4 = "First to sink all the opponents ships wins\n"
+    print(text, text2, text3, text4)
+    symbols = "    Legend\n"
+    water = "1. '.' = water or empty space\n"
+    ship_part = "2. '#' = part of ship\n"
+    hit_ship = "3. 'X' = part of ship that was hit with bullet\n"
+    missed = "4. 'O' = water that was shot with bullet, a miss because it hit no ship\n"
+    print(symbols, water, ship_part, hit_ship, missed)
     print(f"Are you ready to play {player_name}")
     keep_going = input("Press anykey to continue")
     if keep_going:
