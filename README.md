@@ -2,7 +2,7 @@
 
 Battleships Game is a python terminal game, which runs in Code institute mock terminal Heroku
 
-users choose a grid square on the computers board to try and find the computers ships before the 
+Users choose a grid square on the computers board to try and find the computers ships before the 
 computer finds theirs. The user can see there ships and where the computer has shot on their grid
 and can see where they have shot on the computers grid.
 
@@ -11,6 +11,10 @@ and can see where they have shot on the computers grid.
 ## Features 
 
 ### Existing Features
+- __Data control__
+
+  - Data for each sides board and ships is contained in a class.
+  - The scores, grid size and number of ships stored in a dictionary. 
 
 - __Grid generation__
 
@@ -31,11 +35,6 @@ and can see where they have shot on the computers grid.
   - Incorrect inputs return "' ' is invalid" and asks them to resubmit.
 
 ![Input validation](assets/images/battleships_user_input.png)
-
-- __Data control__
-
-  - Data for each sides board and ships is contained in a class.
-  - The scores, grid size and number of ships stored in a dictionary. 
 
 - __Grid size and ship number__ 
 
@@ -96,17 +95,17 @@ __Remaining Bugs__
 
 ## Deployment
 
-Widnes Climbers was deployed using github pages. 
+Battleships Game was deployed using code institues mock terminal for Heroku. 
 
-- The site was deployed to GitHub pages. The steps to deploy are as follows: 
-  - In the GitHub repository, navigated to the Settings tab 
-  - Navigated to the pages section under Code and automation
-  - Source chosen was deploy from branch
-  - Main branch was chosen and saved, page refreshed with a working link to indicate the successful deployment. 
+- The steps to deploy to Heroku are as follows: 
+  - Created a new Heroku app.
+  - Set build packs to Python and Nodejs in that order.
+  - Link Heroku app to the repository.
+  - Clicked launch
 
-The live link can be found here - https://add-faun.github.io/Climbers/index.html
+The live link can be found here - https://awesome-battleships-game.herokuapp.com/
 
 
 ## Credits 
 
-Lots of inspiration was taken from the love running website project taught by Code institute 
+- Code institute for the deployment terminal
