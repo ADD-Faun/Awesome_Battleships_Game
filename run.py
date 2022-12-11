@@ -1,13 +1,3 @@
-# Your code goes here.
-# You can delete these comments, but do not change the name of this file
-# Write your code to expect a terminal of 80 characters wide and 24 rows high
-"""
-    Legend:
-    1. "." = water or empty space
-    2. "#" = part of ship
-    3. "X" = part of ship that was hit with bullet
-    4. "O" = water that was shot with bullet, a miss because it hit no ship
-"""
 import random
 
 # Constants
@@ -80,6 +70,7 @@ class User:
     def hit_miss(self):
         """checks if shot hit or miss. updates board and player"""
         # User shoots, defender variable used to update data
+        # Possiblity to add more players using defender variable
         if self == comp:
             defender = player.board
             tar = random_tar()
@@ -105,10 +96,10 @@ class User:
 def change_grid_size():
     """lets the player change the grid size and choose number of ships"""
 
-    size = input("Choose a Grid size between 2-7\n")
+    size = input("Choose a Grid size between 2-7 to play on\n")
     while size in BAD or size not in str(NUM[1:7]):
         print(f"'{size}' is invalid")
-        size = input("choose a Grid size between 2-7\n")
+        size = input("choose a Grid size between 2-7 to play on\n")
 
     board["size"] = int(size)
     max_ships = min(int(size)**2 - 1, 26)
@@ -266,20 +257,16 @@ def display():
 def how_to_play():
     """Tells player how to play, what symbols mean, what they'll be asked
     and asks if they are ready"""
-    text = "You and you opponent each have ships on a square grid\n"
-    text2 = "Select a square where you think a ship is on the enemy grid\n"
-    text3 = "Enter the row number then column letter to fire\n"
-    text4 = F"First to sink all the opponents ships wins\n{LINE}"
-    print(LINE)
-    print(text, text2, text3, text4)
-    symbols = "    Legend\n"
-    water = "1. '.' = water or empty space\n"
-    ship_part = "2. '#' = A ship\n"
-    hit_ship = "3. 'X' = A ship that was hit with bullet\n"
-    missed = F"4. 'O' = water you have already shot at\n{LINE}"
-    print(symbols, water, ship_part, hit_ship, missed)
+    print(f"Welcome {player_name} to this Awesome Battleships Game")
+    print(f"{LINE}\nYou and you opponent each have ships on a square grid")
+    print("Select a square where you think a ship is on the enemy grid")
+    print("Enter the row number then column letter to select & fire")
+    print(F"First to hit & sink all the opponents ships wins\n{LINE}")
+    print("    Legend\n1. '.' = water or empty space")
+    print("2. '#' = A ship\n3. 'X' = A ship that was hit with bullet")
+    print(F"4. 'O' = water you have already shot at\n{LINE}")
     print(f"Are you ready to play {player_name}")
-    keep_going = input("Press anykey to continue")
+    keep_going = input("Press anykey to continue\n")
     if keep_going:
         pass
 
