@@ -6,7 +6,7 @@ users choose a grid square on the computers board to try and find the computers 
 computer finds theirs. The user can see there ships and where the computer has shot on their grid
 and can see where they have shot on the computers grid.
 
-![Responsice Mockup](assets/images/responsiveness-readme.png)
+![After entering name](assets/images/battleships_game_opening.png)
 
 ## Features 
 
@@ -15,12 +15,13 @@ and can see where they have shot on the computers grid.
 - __Grid generation__
 
   - A square grid is generated for each side to be displayed during the game.
-  - ships are randomly placed on each grid. 
-  - users can not see the computers ships.
+  - Ships are randomly placed on each grid. 
+  - Users can not see the computers ships.
   - Grid has letters and numbers along sides to help choose square.
-  - Grid locations are stored in a dictionary.
+  - Grid locations and state are stored in a dictionary in a class.
+  - Hits, misses and ships are displayed with symbols explained after player enters name.
 
-![Nav Bar](assets/images/Navigation-mock-up.png)
+![Grid 4x4](assets/images/battleships_grid.png) - ![Grid 5x5 symbols](assets/images/battleships_grid_symbols.png)
 
 - __User input and validation__
 
@@ -28,26 +29,21 @@ and can see where they have shot on the computers grid.
   - If selected row or column is not on the grid they are asked to resubmit that data.
   - If user selects a square they have already guessed they are asked to resubmit data.
   - Incorrect inputs return "' ' is invalid" and asks them to resubmit.
-  
 
-![Landing Page](https://github.com/lucyrush/readme-template/blob/master/media/love_running_landing.png)
+![Input validation](assets/images/battleships_user_input.png)
 
 - __Data control__
 
   - Data for each sides board and ships is contained in a class.
   - The scores, grid size and number of ships stored in a dictionary. 
-  - there are some permanent variables. 
-
-![What We Do](assets/images/what-we-do-readme.png)
 
 - __Grid size and ship number__ 
 
   - Allows player to choose number of ships between 1 and 26 as long as it doesn't fill
     the board.
   - Allows player to choose grid size between 2 and 7.
-  - 
 
-![Footer](assets/images/footer-readme.png)
+![Grid 6x6 26 ships](assets/images/battleships_ships_grid.png) 
 
 - __Score__
 
@@ -56,11 +52,14 @@ and can see where they have shot on the computers grid.
   - Users are told how many ships they have left and how many they have left to sink.
   - Users are told if they hit or missed every turn.
 
+![score you missed](assets/images/battleships_score_miss.png) ![score you hit](assets/images/battleships_score_hit.png)
+
 ### Features Left to Implement
 
 - Allow players to place there own ships 
 - Ships of different sizes 
 - Having the computer make better quesses when ships are bigger than one square
+- Could have more than one player for players vs player or 3 player game.
 
 ------
 ## Testing 

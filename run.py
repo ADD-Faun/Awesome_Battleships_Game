@@ -96,18 +96,21 @@ class User:
 def change_grid_size():
     """lets the player change the grid size and choose number of ships"""
 
-    size = input("Choose a Grid size between 2-7 to play on\n")
+    size = input("Choose a Grid size from 2-7 to play on\n")
     while size in BAD or size not in str(NUM[1:7]):
         print(f"'{size}' is invalid")
-        size = input("choose a Grid size between 2-7 to play on\n")
+        size = input("choose a Grid size from 2-7 to play on\n")
 
     board["size"] = int(size)
     max_ships = min(int(size)**2 - 1, 26)
 
-    ships = input(f"choose number of ships between 1-{max_ships}\n")
+    ships = input(f"choose number of ships from 1-{max_ships}\n")
     while ships in BAD or ships not in str(NUM[0: max_ships]):
+        if int(ships) > max_ships:
+            ships = input(f"Thats too many ships choose from 1-{max_ships}\n")
+            continue
         print(f"'{ships}' is invalid")
-        ships = input(f"choose number of ships between 1-{max_ships}\n")
+        ships = input(f"choose number of ships from 1-{max_ships}\n")
 
     ships = int(ships)
     board["ships"], comp.ships, player.ships = ships, ships, ships
