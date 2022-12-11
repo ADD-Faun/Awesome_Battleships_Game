@@ -14,6 +14,7 @@ and can see where they have shot on the computers grid.
 - __Data control__
 
   - Data for each sides board and ships is contained in a class.
+    - Grid locations and state are stored in a dictionary in the class.
   - The scores, grid size and number of ships stored in a dictionary. 
 
 - __Grid generation__
@@ -22,7 +23,6 @@ and can see where they have shot on the computers grid.
   - Ships are randomly placed on each grid. 
   - Users can not see the computers ships.
   - Grid has letters and numbers along sides to help choose square.
-  - Grid locations and state are stored in a dictionary in a class.
   - Hits, misses and ships are displayed with symbols explained after player enters name.
 
 ![Grid 4x4](assets/images/battleships_grid.png) - ![Grid 5x5 symbols](assets/images/battleships_grid_symbols.png)
@@ -65,7 +65,7 @@ and can see where they have shot on the computers grid.
 
 __How testing was done__
 
-- Testing in my local terminal
+- Testing in my local terminal and Heroku app.
 - Passed code through a PEP8 linter and confirmed there are no problems 
 - Given invalid data
     - letters where numbers are expected and the reverse
@@ -90,6 +90,11 @@ __Bugs fixed__
 __Remaining Bugs__
 
 - No bugs remaining
+
+__Validator Test__
+
+- PEP8
+  - no errors returned from
 
 ------
 

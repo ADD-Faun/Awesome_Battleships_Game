@@ -193,9 +193,10 @@ def score(shot, hit, tar):
         print(f"Weldone you've hit an enemy ship on {tar}")
     else:
         print(f"Too bad no enemy ship on {tar}")
-    print(f"After {shots} {word} you have {player.ships} left floating")
-    print(f"Your enemy has {comp.ships} left for you to sink.")
-    print(LINE)
+    print(
+        f"After {shots} {word} you have {player.ships} left floating"
+        f"\nYour enemy has {comp.ships} left for you to sink."
+        f"\n{LINE}")
 
 
 def finish_game():
@@ -211,9 +212,10 @@ def finish_game():
             print(f"Weldone {player_name} you sunk all the enemy ships")
         else:
             print(f"Too bad {player_name} they sunk all your ships")
-        print(f"you had {player.ships} ships left floating of {ships}")
-        print(f"Your enemy had {comp.ships} left floating of {ships}")
-        print(LINE)
+        print(
+            f"you had {player.ships} ships left floating of {ships}"
+            f"\nYour enemy had {comp.ships} left floating of {ships}"
+            f"\n{LINE}")
     # Asks if player wants to continue. if not continue prints ship numbers
     else:
         end_game = input("Press anykey to continue or N to quit game\n")
@@ -221,9 +223,10 @@ def finish_game():
         if end_game == "N":
             game_over = True
             print(LINE)
-            print(f"you had {player.ships} ships left floating of {ships}")
-            print(f"Your enemy had {comp.ships} left floating of {ships}")
-            print(LINE)
+            print(
+                f"you had {player.ships} ships left floating of {ships}"
+                f"\nYour enemy had {comp.ships} left floating of {ships}"
+                f"\n{LINE}")
 
 
 def new_game():
@@ -252,23 +255,27 @@ def set_board():
 def display():
     """prints both grids with labels"""
     comp.print_grid()
-    print("^^Enemy Grid^^")
-    print("Your Grid below")
+    print("^^Enemy Grid^^\nYour Grid below")
     player.print_grid()
 
 
 def how_to_play():
     """Tells player how to play, what symbols mean, what they'll be asked
     and asks if they are ready"""
-    print(f"Welcome {player_name} to this Awesome Battleships Game")
-    print(f"{LINE}\nYou and you opponent each have ships on a square grid")
-    print("Select a square where you think a ship is on the enemy grid")
-    print("Enter the row number then column letter to select & fire")
-    print(F"First to hit & sink all the opponents ships wins\n{LINE}")
-    print("    Legend\n1. '.' = water or empty space")
-    print("2. '#' = A ship\n3. 'X' = A ship that was hit with bullet")
-    print(F"4. 'O' = water you have already shot at\n{LINE}")
-    print(f"Are you ready to play {player_name}")
+    print(
+        f"Welcome {player_name} to this Awesome Battleships Game"
+        f"\n{LINE}"
+        "\nYou and you opponent each have ships on a square grid"
+        "\nSelect a square where you think a ship is on the enemy grid"
+        "\nEnter the row number then column letter to select & fire"
+        "\nFirst to hit & sink all the opponents ships wins"
+        f"\n{LINE}"
+        "\n    Legend"
+        "\n1. '.' = water or empty space"
+        "\n2. '#' = A ship\n3. 'X' = A ship that was hit with bullet"
+        "\n4. 'O' = water you have already shot at"
+        f"\n{LINE}"
+        f"\nAre you ready to play {player_name}")
     keep_going = input("Press anykey to continue\n")
     if keep_going:
         pass
