@@ -52,7 +52,7 @@ class User:
         print_col_letters(grid_size)
 
         for row in range(0, grid_size):
-            print_row_numbers(row)
+            print_row_number(row)
             for col in range(0, grid_size):
                 tar = target(row, col)
                 if self.board[tar] == "#":
@@ -62,7 +62,7 @@ class User:
                         print(".", end=" ")
                 else:
                     print(self.board[tar], end=" ")
-            print_row_numbers(row)
+            print_row_number(row)
             print(" ")
 
         print_col_letters(grid_size)
@@ -99,18 +99,18 @@ def change_grid_size():
     size = input("Choose a Grid size from 2-7 to play on\n")
     while size in BAD or size not in str(NUM[1:7]):
         print(f"'{size}' is invalid")
-        size = input("choose a Grid size from 2-7 to play on\n")
+        size = input("Choose a Grid size from 2-7 to play on\n")
 
     board["size"] = int(size)
     max_ships = min(int(size)**2 - 1, 26)
 
-    ships = input(f"choose number of ships from 1-{max_ships}\n")
+    ships = input(f"Choose number of ships from 1-{max_ships}\n")
     while ships in BAD or ships not in str(NUM[0: max_ships]):
         if int(ships) > max_ships:
             ships = input(f"Thats too many ships choose from 1-{max_ships}\n")
             continue
         print(f"'{ships}' is invalid")
-        ships = input(f"choose number of ships from 1-{max_ships}\n")
+        ships = input(f"Choose number of ships from 1-{max_ships}\n")
 
     ships = int(ships)
     board["ships"], comp.ships, player.ships = ships, ships, ships
@@ -124,8 +124,8 @@ def print_col_letters(grid_size):
     print("")
 
 
-def print_row_numbers(row):
-    """prints out row numbers for the side of the grid"""
+def print_row_number(row):
+    """prints out row number for the side of the grid"""
     print(f"{NUM[row]}", end=" ")
 
 
@@ -148,6 +148,7 @@ def accept_shot_validate(defender):
     """Take user input and check if valid"""
     valid_shot = False
     grid_size = board["size"]
+
     # Choices and range to keep code short & readable
     row_choices = f"Choose a row between {NUM[0]}-{NUM[grid_size - 1]}\n"
     col_choices = f"Choose a column between {LET[0]}-{LET[grid_size - 1]}\n"
@@ -188,15 +189,21 @@ def score(shot, hit, tar):
     if board["shots"] > 1:
         word = "shots"
 
-    print(LINE)
     if hit:
-        print(f"Weldone you've hit an enemy ship on {tar}")
+        print(
+            f"{LINE}"
+            f"\nWeldone you've hit an enemy ship on {tar}"
+             )
     else:
-        print(f"Too bad no enemy ship on {tar}")
+        print(
+            f"{LINE}"
+            f"\nToo bad no enemy ship on {tar}"
+             )
     print(
         f"After {shots} {word} you have {player.ships} left floating"
         f"\nYour enemy has {comp.ships} left for you to sink."
-        f"\n{LINE}")
+        f"\n{LINE}"
+         )
 
 
 def finish_game():
@@ -207,26 +214,35 @@ def finish_game():
     # Checks if either side has lost all their ships
     if comp.ships == 0 or player.ships == 0:
         game_over = True
-        print(LINE)
+
         if comp.ships == 0:
-            print(f"Weldone {player_name} you sunk all the enemy ships")
+            print(
+                f"{LINE}"
+                f"\nWeldone {player_name} you sunk all the enemy ships"
+                 )
         else:
-            print(f"Too bad {player_name} they sunk all your ships")
+            print(
+                f"{LINE}"
+                f"\nToo bad {player_name} they sunk all your ships"
+                 )
         print(
             f"you had {player.ships} ships left floating of {ships}"
             f"\nYour enemy had {comp.ships} left floating of {ships}"
-            f"\n{LINE}")
+            f"\n{LINE}"
+            )
     # Asks if player wants to continue. if not continue prints ship numbers
     else:
         end_game = input("Press anykey to continue or N to quit game\n")
         end_game = end_game.upper()
         if end_game == "N":
             game_over = True
-            print(LINE)
+
             print(
-                f"you had {player.ships} ships left floating of {ships}"
+                f"{LINE}"
+                f"\nyou had {player.ships} ships left floating of {ships}"
                 f"\nYour enemy had {comp.ships} left floating of {ships}"
-                f"\n{LINE}")
+                f"\n{LINE}"
+                 )
 
 
 def new_game():
@@ -275,7 +291,8 @@ def how_to_play():
         "\n2. '#' = A ship\n3. 'X' = A ship that was hit with bullet"
         "\n4. 'O' = water you have already shot at"
         f"\n{LINE}"
-        f"\nAre you ready to play {player_name}")
+        f"\nAre you ready to play {player_name}"
+         )
     keep_going = input("Press anykey to continue\n")
     if keep_going:
         pass
