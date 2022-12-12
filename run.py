@@ -1,3 +1,18 @@
+"""
+    -------BATTLESHIPS-------
+    How it will work:
+    Takes user name and has them play battleships against a computer
+    Prints the game board with symbols in legend
+    Keeps score and informs player
+    Tells player when they have won/lost
+    Asks if they want to play again
+
+    Legend:
+    1. "." = water or empty space
+    2. "#" = part of ship
+    3. "X" = part of ship that was hit with bullet
+    4. "O" = water that was shot with bullet, a miss because it hit no ship
+"""
 import random
 
 # Constants
