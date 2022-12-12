@@ -96,10 +96,12 @@ __Validator Test__
 - PEP8
   - Errors found using pythonchecker.com
     - Put white spaces around the ' = ' in ' print("#", end=" ") '
-      <br>but latest PEP8 says Do not include spaces around ‘=’ when used to indicate a default argument 
+      <br>but PEP8 says Do not include spaces around ‘=’ when used to indicate a default argument 
       <br> or keyword argument like ' end=" " '.
     - Put white spaces around the operator ' - ' in ' input("Choose a Grid size from 2-7 to play on\n") '
       <br>but ' - ' is not being used as an operator it is part of the string.
+    - Put two empty lines in front of function definition
+      <br>but those functions are methods of a class.
   - Above errors found repeatedly but not actual errors.
   - No other errors found.
 
