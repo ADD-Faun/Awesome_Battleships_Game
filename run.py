@@ -131,6 +131,7 @@ def change_grid_size():
     board["ships"], comp.ships, player.ships = ships, ships, ships
 
 
+# These next three defs make code much more readable, dont try not using them
 def print_col_letters(grid_size):
     """prints out the column letters. Used at top & bottom of grid"""
     print(" ", end=" ")
@@ -226,7 +227,7 @@ def finish_game():
     global game_over
     game_over = False
     ships = board["ships"]
-    # Checks if either side has lost all their ships
+
     if comp.ships == 0 or player.ships == 0:
         game_over = True
 
@@ -245,7 +246,7 @@ def finish_game():
             f"\nYour enemy had {comp.ships} left floating of {ships}"
             f"\n{LINE}"
             )
-    # Asks if player wants to continue. if not continue prints ship numbers
+
     else:
         end_game = input("Press anykey to continue or N to quit game\n")
         end_game = end_game.upper()
@@ -271,14 +272,12 @@ def new_game():
 
 def set_board():
     """Sets global varibles needed for game to 0"""
-    # Set shots and hits to zero for new game score
     board["shots"] = 0
     board["hits"] = 0
-    # Game_over must be set to False for game to run
+
     global game_over
     game_over = False
 
-    # Clear both grids so never any issues of size
     player.board.clear()
     comp.board.clear()
 
