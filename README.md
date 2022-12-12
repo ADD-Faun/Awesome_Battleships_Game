@@ -33,6 +33,8 @@ Users choose a grid square on the computers board to try and find the computers 
   - If selected row or column is not on the grid they are asked to resubmit that data.
   - If user selects a square they have already guessed they are asked to resubmit data.
   - Incorrect inputs return "' ' is invalid" and asks them to resubmit.
+  - Choice of number of ships has a max amount to stop players over filling the board or
+    <br>from choosing more ships than the dictionary can hold.
 
 ![Input validation](assets/images/battleships_user_input.png)
 
