@@ -3,8 +3,8 @@
 Battleships Game is a python terminal game, which runs in Code institute mock terminal Heroku
 
 Users choose a grid square on the computers board to try and find the computers ships before the 
-computer finds theirs. The user can see there ships and where the computer has shot on their grid
-and can see where they have shot on the computers grid.
+<br>computer finds theirs. The user can see there ships and where the computer has shot on their grid
+<br>and can see where they have shot on the computers grid.
 
 ![After entering name](assets/images/battleships_game_opening.png)
 
@@ -39,7 +39,7 @@ and can see where they have shot on the computers grid.
 - __Grid size and ship number__ 
 
   - Allows player to choose number of ships between 1 and 26 as long as it doesn't fill
-    the board.
+    <br>the board.
   - Allows player to choose grid size between 2 and 7.
 
 ![Grid 6x6 26 ships](assets/images/battleships_ships_grid.png) 
@@ -47,7 +47,7 @@ and can see where they have shot on the computers grid.
 - __Score__
 
   - How many shots there have been and how many ships they hit is told to the user at
-    the end of every turn.
+    <br>the end of every turn.
   - Users are told how many ships they have left and how many they have left to sink.
   - Users are told if they hit or missed every turn.
 
@@ -72,20 +72,20 @@ __How testing was done__
     - no data entered
     - Blank spaces and random symbols like ! {} []
 - Set a debug_mode in the print_grid function to show computer ships when
-  Debug_mode is True. Allowing to test hit, miss and win messages and 
-  test score tracking.
+  <br>Debug_mode is True. Allowing to test hit, miss and win messages and 
+  <br>test score tracking.
 
 __Bugs fixed__
 
 - Enteries such as symbols ] , } and empty space were being accepted when not in the accepted 
-  range and caused crashes when trying to change to an interger. I fixed this by adding a list 
-  of unexcepted characters.
+  <br>range and caused crashes when trying to change to an interger. I fixed this by adding a list 
+  <br>of unexcepted characters.
 - Grid size can't be bigger than 26 as it runs out of letters. fixed by limiting grid size.
 - Grid size can't be bigger that 9 as it miss aligns the row with the column. fixed by limiting
-  choice of grid size.
+  <br>choice of grid size.
 - Input request was to long inside while and if statements, so set to a variable.
 - Using user input of letters made for too long code or crashes. fixed by changing letter input
-  recieved into a number using ord(x) - 65 .
+  <br>recieved into a number using ord(x) - 65 .
 
 __Remaining Bugs__
 
@@ -94,7 +94,14 @@ __Remaining Bugs__
 __Validator Test__
 
 - PEP8
-  - no errors returned from
+  - Errors found using pythonchecker.com
+    - Put white spaces around the ' = ' in ' print("#", end=" ") '
+      <br>but latest PEP8 says Do not include spaces around ‘=’ when used to indicate a default argument 
+      <br> or keyword argument like ' end=" " '.
+    - Put white spaces around the operator ' - ' in ' input("Choose a Grid size from 2-7 to play on\n") '
+      <br>but ' - ' is not being used as an operator it is part of the string.
+  - Above errors found repeatedly but not actual errors.
+  - No other errors found.
 
 ------
 
